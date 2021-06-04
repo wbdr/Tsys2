@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.TsysMapper">
+
+    <select id="login" parameterType="User" resultType="int">
+        select count(uid)
+        from user
+        where name = #{name}
+          and password = #{password}
+          and type = #{type};
+    </select>
+    <select id="stuGetData" parameterType="String" resultType="Student">
+        select *
+        from student
+        where Sname = #{name};
+    </select>
+    <select id="teaGetData" parameterType="String" resultType="Teacher">
+        select *
+        from teacher
+        where tname = #{name};
+    </select>
+    <select id="getTno" parameterType="String" resultType="String">
+        select tno
+        from teacher
+        where tname = #{name};
+    </select>
+    <select id="getSno" parameterType="String" resultType="String">
+        select sno
+        from student
+        where Sname = #{name};
+    </select>
+    <select id="getSc" parameterType="String" resultType="Sc">
+        select s.sno, s.cno, s.tno, s.place, s.time, t.tname, c.cname
+        from sc as s
+                 inner join teacher as t,
+             course as c
+        where sno = #{sno}
+          and s.tno = t.tno
+          and s.cno = c.cno;
+    </select>
+    <select id="getAllCourse" resultType="Course">
+        select *
+        from course;
+    </select>
+    <select id="getQuestions" resultType="Question">
+        select *
+        from question
+        where cno = #{cno}
+          and qtype = #{qtype};
+    </select>
+    <select id="getScode" parameterType="String" resultType="String">
+        select scode
+        from student
+        where sno = #{sno};
+    </select>
+    <select id="getScore" parameterType="String" resultType="Grade">
+        select *
+        from grade
+        where sno = #{sno};
+    </select>
+    <select id="giveScore" parameterType="Answer" resultType="int">
+        select count(qid)
+        from question
+        where qid=#{qid}
+and qanwser=#{qanwser};
+    </select>
+    <select id="getMyClass" resultType="MyClass">
+        select * from myclass;
+    </select>
+    <select id="getTcourse" resultType="Tcourse">
+        select * from tcourse where classname=#{classname} and phase=#{phase};
+    </select>
+</mapper>
